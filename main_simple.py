@@ -19,7 +19,7 @@ S = 5
 A = 2
 data = []
 lr = args.lr
-ray.init(num_cpus=56, num_gpus=0)
+ray.init(num_cpus=8, num_gpus=0)
 
 for gamma in tqdm(gammas):
     mdp = SimpleMDP((4*gamma-1)/(3*gamma))

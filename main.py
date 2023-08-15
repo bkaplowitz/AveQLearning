@@ -21,7 +21,7 @@ lamba = 1
 mdp = RandomMDP(S, A, r)
 data = []
 replica = 500
-ray.init(num_cpus=50, num_gpus=0)
+ray.init(num_cpus=8, num_gpus=0) #50
 
 for gamma in tqdm(gammas):
     res = ray.get([run.remote(S, A, gamma, mdp, lr, lamba, alg) for _ in range(replica)])

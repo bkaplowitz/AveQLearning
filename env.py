@@ -1,5 +1,4 @@
 import numpy as np
-
 class RandomMDP(object):
     def __init__(self, S, A, r, sparsity = 1.0):
         self.S = S
