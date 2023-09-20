@@ -16,7 +16,7 @@ def run(S, A, gamma, mdp, lr=0.75, lamba=1, algo='aql'):
     elif algo == "entropy":
         v_true = regularized_vi(mdp, v0, gamma, lamba, max_iter=10000)[-1]
     else:
-        raise ValueError("No such algo {}!".format(algo))
+        raise ValueError(f"No such algo {algo}!")
 
     q_true = np.reshape(mdp.R + gamma * np.matmul(mdp.P, v_true), (S, A))
 
@@ -70,7 +70,7 @@ def var_cal(mdp, gamma, lamba=None):
     S = mdp.S
     A = mdp.A
     v0 = np.zeros(shape=(S,))
-    if lamba == None:
+    if lamba is None:
         v_true = vi(mdp, v0, gamma, max_iter=1000)[-1]
         q_true = np.reshape(mdp.R + gamma * np.matmul(mdp.P, v_true), (S, A))
         pi_true = np.argmax(q_true, axis=1)
@@ -89,7 +89,7 @@ def var_cal(mdp, gamma, lamba=None):
             for j in range(A):
                 P_pi[:, i, j] = mdp.P[:, i] * pi_true[i, j]
     else:
-        raise ValueError("Illegal lambda {}!".format(lamba))
+        raise ValueError(f"Illegal lambda {lamba}!")
     P_pi = P_pi.reshape((S * A, S * A))
     G = np.eye(S*A) - gamma * P_pi
     var_p = np.zeros((S*A, S*A))
@@ -140,11 +140,11 @@ class moving_variance(object):
         if self.x is None:
             self.A = x @ x.T * self.number ** 2 * weight
             self.b = x * self.number ** 2 * weight
-            self.x = np.copy(x)
         else:
             self.A += x @ x.T * self.number ** 2 * weight
             self.b += x * self.number ** 2 * weight
-            self.x = np.copy(x)
+
+        self.x = np.copy(x)
 
     def value(self):
         return (self.A - self.x @ self.b.T - self.b @ self.x.T + self.squre_sum * self.x @ self.x.T) / self.weights / self.number**2
@@ -166,7 +166,7 @@ def regularized_vi(env, V, gamma, lamba, max_iter=10):
     S = env.S
     A = env.A
     V_list = [V]
-    for k in range(max_iter):
+    for _ in range(max_iter):
         rq = R + gamma * np.matmul(P_hat, V)
         rq = rq.reshape(S, A)
         V = regularized_max(rq, lamba)

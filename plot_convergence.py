@@ -10,7 +10,7 @@ plt.ylabel(r'$\log T(\varepsilon, \gamma)$')
 
 fs = os.listdir('./results/')
 for fn in fs:
-    f = json.load(open('./results/'+fn, 'r'))
+    f = json.load(open(f'./results/{fn}', 'r'))
     chars = fn.split('_')
     lr = chars[2]
     data = f['data']
@@ -31,11 +31,17 @@ for fn in fs:
     model = LinearRegression()
     model.fit(log_H.reshape(-1,1), log_t.reshape(-1,1))
     coef = model.coef_[0][0]
-    print(lr + str('_') + 'Regression Coefficient: ' + str(coef))
+    print(f'{lr}_Regression Coefficient: {str(coef)}')
     log_t_pred = model.predict(log_H.reshape(-1,1))
     label = r'$k=${:.2f}'.format(coef)
     ax.plot(log_H, log_t, label=label)
-ax.plot(log_H, 3*log_H+3, label=r'Baseline,$k=${}'.format(3), linestyle='dotted', color='black')
+ax.plot(
+    log_H,
+    3 * log_H + 3,
+    label='Baseline,$k=$3',
+    linestyle='dotted',
+    color='black',
+)
 handles, labels = plt.gca().get_legend_handles_labels()
 labels, handles = zip(*sorted(zip(labels, handles), key=lambda t: t[0]))
 plt.legend(handles, labels)

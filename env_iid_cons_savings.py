@@ -30,5 +30,5 @@ class ConsSavingsIID:
         trans = np.zeros(shape=(T, self.S*self.A, self.S))
         for sa in range(self.S*self.A):
             s_next = np.random.choice(self.S, T, p=self.P[sa])
-            trans[[_ for _ in range(T)], sa, s_next] = 1.0
+            trans[list(range(T)), sa, s_next] = 1.0
         return trans

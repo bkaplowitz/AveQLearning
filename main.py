@@ -45,7 +45,6 @@ for gamma in tqdm(gammas):
     # data is a tuple with len=# of gammas
 
 dct = {'data': data}
-f = open('./results/S{}_A{}_Alg{}_lr{}_random_r{}_burn.json'.format(S, A, alg, lr, r), 'w')
-f.write(json.dumps(dct))
-f.close()
+with open(f'./results/S{S}_A{A}_Alg{alg}_lr{lr}_random_r{r}_burn.json', 'w') as f:
+    f.write(json.dumps(dct))
 

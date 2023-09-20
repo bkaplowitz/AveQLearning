@@ -24,10 +24,7 @@ a = 0
 fs = os.listdir('./results/')
 
 def whether_file(name):
-    if "DS_Store" in name:
-        return False
-    else:
-        return True
+    return "DS_Store" not in name
 
 
 fs = filter(whether_file, fs)
@@ -36,7 +33,9 @@ tracted_data = {}
 
 for algo in ["aql"]:
     try:
-        f = json.load(open('./results/S4_A3_Alg{}_lr0.51_random_r5_burn.json'.format(algo), 'r'))
+        f = json.load(
+            open(f'./results/S4_A3_Alg{algo}_lr0.51_random_r5_burn.json', 'r')
+        )
     except:
         pass
     data = f['data']
@@ -49,13 +48,13 @@ for algo in ["aql"]:
         lengths = np.array(lengths)
         y = falls.mean(axis=0)[:, s, a] * 100
         x = np.arange(len(y))
-        ax.plot(x, y, label=r'$\gamma=${}'.format(gamma), linestyle="-")
+        ax.plot(x, y, label=f'$\gamma=${gamma}', linestyle="-")
 
         z = lengths.mean(axis=0)[:, s, a] * 100
-        ax1.plot(x, z, label=r'$\gamma=${}'.format(gamma), linestyle='--')
+        ax1.plot(x, z, label=f'$\gamma=${gamma}', linestyle='--')
 
         print(gamma, y[-1], z[-1])
 
     plt.legend()
     plt.tight_layout()
-    plt.savefig('./online_r5_burn_repli500_{}_without9.pdf'.format(algo), dpi=200)
+    plt.savefig(f'./online_r5_burn_repli500_{algo}_without9.pdf', dpi=200)

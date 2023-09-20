@@ -29,7 +29,6 @@ for gamma in tqdm(gammas):
     data.append((np.log(1/(1-gamma)), np.log(var), avg_loss.tolist()))
 
 dct = {'data': data}
-f = open('./S:{}_A:{}_lr:{}_Avg:{}_Rescale:{}_simple.json'.format(S, A, lr, args.avg, args.rescale), 'w')
-f.write(json.dumps(dct))
-f.close()
+with open(f'./S:{S}_A:{A}_lr:{lr}_Avg:{args.avg}_Rescale:{args.rescale}_simple.json', 'w') as f:
+    f.write(json.dumps(dct))
 
